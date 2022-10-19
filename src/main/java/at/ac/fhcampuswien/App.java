@@ -82,8 +82,8 @@ public class App {
         StringBuilder stringBuilder = new StringBuilder();
         char[] words = string.toCharArray();
         boolean capital = false;
-        boolean uppercase = false;
-        boolean lowercase = false;
+        boolean uppercase;
+        boolean lowercase;
         for(int i = 0; i < words.length; i++) {
             uppercase = words[i] >= 'A' && words[i] <= 'Z';
             lowercase = (words[i] >= 'a' && words[i] <= 'z');
