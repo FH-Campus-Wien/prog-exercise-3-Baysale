@@ -81,25 +81,33 @@ public class App {
     public static String camelCase(String string) {
         StringBuilder stringBuilder = new StringBuilder();
         char[] words = string.toCharArray();
-        boolean upper = false;
+        boolean capital = false;
+        boolean uppercase = false;
+        boolean lowercase = false;
         for(int i = 0; i < words.length; i++) {
-            if(!upper) {
-                words[i] = Character.toLowerCase(words[i]);
-            }
-            upper = false;
-            if(Character.toUpperCase(words[i]) >= 'A' && Character.toUpperCase(words[i]) <= 'Z') {
-                if(i==0) {
-                    words[i] = Character.toUpperCase(words[i]);
-                }
+            uppercase = words[i] >= 'A' && words[i] <= 'Z';
+            lowercase = (words[i] >= 'a' && words[i] <= 'z');
+            words[i] = uppercase && !capital ? (char) (words[i] + 32) : words[i]; //Character.toLowerCase(words[i]);
+            if(uppercase || lowercase) {
+                words[i] = i == 0 ? toUpperCase(words[i], uppercase) : words[i];
                 stringBuilder.append(words[i]);
             }
+            capital = false;
             if(words[i] == ' ') {
-                words[i+1] = Character.toUpperCase(words[i + 1]);
-                upper = true;
+                uppercase = words[i+1] >= 'A' && words[i+1] <= 'Z';
+                words[i+1] = toUpperCase(words[i+1], uppercase);
+                capital = true;
             }
         }
         string = stringBuilder.toString().replace(" ", "");
         return string;
+    }
+
+    public static char toUpperCase(int character, boolean alreadyUpper)   {
+        if(!alreadyUpper) {
+            character -= 32;
+        }
+        return (char) character;
     }
 
     public static int checkDigit(int[] intArr) {
